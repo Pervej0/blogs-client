@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Spinner from "../Spinner";
 import { FavouriteContext } from "../../context/favouriteContext";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({});
@@ -38,7 +39,16 @@ const BlogDetails = () => {
               <h1 className="text-4xl font-bold">{title}</h1>
               <p className="text-md mb-4">{body}</p>
               <button
-                onClick={() => setFavouriteBlog((prev: any) => [...prev, data])}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                  setFavouriteBlog((prev: any) => {
+                    toast.success("Added on Favourite List", {
+                      autoClose: 3000,
+                      theme: "light",
+                    });
+                    event.currentTarget.disabled = true;
+                    return [...prev, data];
+                  })
+                }
                 className="bg-blue-600 text-white py-1 px-2 rounded-sm"
               >
                 Favourite
